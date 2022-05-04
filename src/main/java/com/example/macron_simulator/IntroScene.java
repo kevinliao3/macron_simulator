@@ -10,14 +10,19 @@ import java.io.File;
 
 public class IntroScene extends Scene {
 
+    Media media;
+    MediaPlayer mediaPlayer;
+    MediaView mediaView;
+
     public IntroScene() {
         super(new Group(), 540, 209);
-        Media media = new Media((new File("assets/videoplayback.mp4").toURI().toString()));
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        media = new Media((new File("assets/slap.mp4").toURI().toString()));
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
-        MediaView mediaView = new MediaView(mediaPlayer);
+        mediaView = new MediaView(mediaPlayer);
         ((Group) this.getRoot()).getChildren().add(mediaView);
-
     }
+
+
 
 }
