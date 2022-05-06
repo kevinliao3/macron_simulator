@@ -15,6 +15,7 @@ import java.io.IOException;
 public class Main extends Application {
 
     public static Stage stage;
+    Object currentScene;
     IntroScene introscene = new IntroScene();
     ShopScene shopscene = new ShopScene();
     DialogueScene dialoguescene = new DialogueScene("assets/dialogue1.json");
@@ -30,6 +31,7 @@ public class Main extends Application {
 
         stage.addEventHandler(MouseEvent.MOUSE_PRESSED,handler);
 //        stage.setScene(introscene);
+        currentScene = introscene;
         stage.setScene(brigetteFight);
         stage.show();
     }

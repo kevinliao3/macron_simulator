@@ -15,3 +15,11 @@
     -fx-translate-z: 5;
     /*-fx-translate*/
 }
+
+.macron {
+    -fx-translate-y:550
+}
+
+.opponent {
+    -fx-translate-x: 300;
+}
