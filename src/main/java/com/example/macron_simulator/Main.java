@@ -3,10 +3,13 @@ package com.example.macron_simulator;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
+import java.io.File;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -14,7 +17,11 @@ public class Main extends Application {
     public static Stage stage;
     IntroScene introscene = new IntroScene();
     ShopScene shopscene = new ShopScene();
+    DialogueScene dialoguescene = new DialogueScene("assets/dialogue1.json");
 
+    Image brigette = new Image("file:assets/brigette.jpg");
+    ImageView brigetteView = new ImageView(brigette);
+    BrigetteFight brigetteFight = new BrigetteFight(brigetteView);
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -22,7 +29,8 @@ public class Main extends Application {
         stage = primaryStage;
 
         stage.addEventHandler(MouseEvent.MOUSE_PRESSED,handler);
-        stage.setScene(introscene);
+//        stage.setScene(introscene);
+        stage.setScene(brigetteFight);
         stage.show();
     }
 
@@ -43,7 +51,11 @@ public class Main extends Application {
     public void transitionScene(int sceneID) {
         switch(sceneID) {
             case 1:
-                stage.setScene(shopscene);
+                stage.setScene(dialoguescene);
+                break;
+            case 2:
+                stage.setScene(dialoguescene);
+                break;
         }
     }
 

@@ -1,0 +1,11 @@
+{
+  "dialogue": [{
+    "id": "macron",
+    "dialogue": "hello"
+  },
+    {
+      "id": "lepen",
+      "dialogue": "you are weak"
+    }
+  ]
+}

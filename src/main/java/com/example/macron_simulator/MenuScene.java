@@ -5,26 +5,18 @@ import javafx.scene.Scene;
 
 import javafx.scene.text.*;
 
-import java.io.File;
-import java.net.URL;
+public class MenuScene extends Scene {
 
-public class ShopScene extends Scene {
-
-    public ShopScene() {
+    public MenuScene() {
         super(new Group(), 540, 209);
 
-        File cssFile = new File("css/shop.css");
-
-        this.getStylesheets().add("file:///" + cssFile.getAbsolutePath().replace("\\", "/"));
-
-        Text fight = new Text("Earplugs");
+        Text fight = new Text("Fight");
         fight.setFont(new Font(20));
-        Text shop = new Text("RAD-140");
+        Text shop = new Text("Shop");
         shop.setFont(new Font(20));
 
         TextFlow textFlow = new TextFlow(fight, shop);
         ((Group) this.getRoot()).getChildren().add(textFlow);
-
 
     }
 

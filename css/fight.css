@@ -1,0 +1,17 @@
+
+.hpbar {
+   -fx-fill: red;
+    -fx-rotate: -90;
+    -fx-translate-x: 50;
+    -fx-translate-y: 600;
+    -fx-translate-z: 5;
+}
+
+.ppbar {
+    -fx-fill: blue;
+    -fx-rotate: -90;
+    -fx-translate-x: 100;
+    -fx-translate-y: 600;
+    -fx-translate-z: 5;
+    /*-fx-translate*/
+}
