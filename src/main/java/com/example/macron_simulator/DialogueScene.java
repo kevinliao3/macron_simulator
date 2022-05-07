@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
+//I think that instead of a DialogueScene I will use a DialogueController class that switches between different scenes
 public class DialogueScene extends Scene {
 
     ObjectMapper mapper;
@@ -21,8 +25,8 @@ public class DialogueScene extends Scene {
     File personToImageFile;
 
     //Have it accept JSON dialogue options
-    public DialogueScene(String jsonpath) {
-        super(new Group(), 540, 209);
+    public DialogueScene(String jsonpath, double X, double Y) {
+        super(new Group(), X, Y);
 
         mapper = new ObjectMapper();
 
@@ -45,8 +49,8 @@ public class DialogueScene extends Scene {
             ArrayList<Map<String, String>> y = (ArrayList<Map<String,String>>) result.get("dialogue");
 
             for (Map sentence: y) {
-                System.out.println(sentence.get("id"));
-                System.out.println(sentence.get("dialogue"));
+//                System.out.println(sentence.get("id"));
+//                System.out.println(sentence.get("dialogue"));
 
                 //Change the scene for the person and render the dialogue box
 
@@ -60,7 +64,16 @@ public class DialogueScene extends Scene {
         } catch (IOException e) {
             throw new AssertionError("IOException found.",e);
         }
-//        ((Group) this.getRoot()).getChildren().add(textFlow);
+
+        //Cannot seem to get the CSS background to work
+        Image x = new Image("file:assets/macron_phone.png");
+        BackgroundImage bImg = new BackgroundImage(x,BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        Background bGround = new Background(bImg);
+
         String cssValue = "-fx-background-image: url(macron_phone.jpg)";
         (this.getRoot()).setStyle(cssValue);
 

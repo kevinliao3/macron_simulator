@@ -7,8 +7,8 @@ import javafx.scene.text.*;
 
 public class MenuScene extends Scene {
 
-    public MenuScene() {
-        super(new Group(), 540, 209);
+    public MenuScene(double X, double Y) {
+        super(new Group(), X, Y);
 
         Text fight = new Text("Fight");
         fight.setFont(new Font(20));

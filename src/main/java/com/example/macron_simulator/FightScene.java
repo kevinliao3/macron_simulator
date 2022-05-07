@@ -22,8 +22,8 @@ public class FightScene extends Scene {
     Rectangle opponentHPBar;
     Rectangle opponentPPBar;
 
-    public FightScene(ImageView opponentView) {
-        super(new Group(), 540, 209);
+    public FightScene(ImageView opponentView, double X, double Y) {
+        super(new Group(), X, Y);
 
         macronHPBar = new Rectangle(150.0, 30.0);
         macronPPBar = new Rectangle(150.0, 30.0);
