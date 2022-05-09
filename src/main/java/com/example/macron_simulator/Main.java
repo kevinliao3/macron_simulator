@@ -26,6 +26,8 @@ public class Main extends Application {
     Image brigette = new Image("file:assets/brigette.jpg");
     ImageView brigetteView = new ImageView(brigette);
     BrigetteFight brigetteFight;
+    SlapScene slapScene;
+    MenuScene menuScene;
 
     MacronBackground macronBackground;
 
@@ -40,16 +42,25 @@ public class Main extends Application {
         //Need to have a seperate thing for the correct transition between stages
 
         introscene = new IntroScene(screenX, screenY);
-        introscene.addEventHandler(MouseEvent.MOUSE_PRESSED,handler);
 
-        currentScene = introscene;
-        stage.setScene(currentScene);
-        stage.show();
+
 
         dialoguescene = new DialogueScene("assets/dialogue1.json",screenX, screenY);
         brigetteFight = new BrigetteFight(brigetteView, screenX, screenY);
         macronBackground = new MacronBackground(screenX, screenY);
         shopscene = new ShopScene(screenX, screenY);
+        slapScene = new SlapScene(screenX, screenY);
+        menuScene = new MenuScene(screenX, screenY);
+
+        introscene.addEventHandler(MouseEvent.MOUSE_PRESSED,handler);
+        dialoguescene.addEventHandler(MouseEvent.MOUSE_PRESSED, dialogueTransition);
+        menuScene.addEventHandler(MouseEvent.MOUSE_PRESSED, menuTransition);
+        shopscene.addEventHandler(MouseEvent.MOUSE_PRESSED, shopTransition);
+        brigetteFight.addEventHandler(MouseEvent.MOUSE_PRESSED, fightTransition);
+
+        currentScene = introscene;
+        stage.setScene(currentScene);
+        stage.show();
 
     }
 
@@ -63,8 +74,40 @@ public class Main extends Application {
         @Override
         public void handle(Event event) {
             //Log to a logger
-            transitionScene(3);
+            transitionScene(2);
             introscene.stopPlaying();
+        }
+    };
+
+    EventHandler dialogueTransition = new EventHandler() {
+        @Override
+        public void handle(Event event) {
+            //Log to a logger
+            transitionScene(6);
+            introscene.stopPlaying();
+        }
+    };
+
+    EventHandler menuTransition = new EventHandler() {
+        @Override
+        public void handle(Event event) {
+            transitionScene(3);
+
+        }
+    };
+
+    EventHandler shopTransition = new EventHandler() {
+        @Override
+        public void handle(Event event) {
+            transitionScene(4);
+
+        }
+    };
+
+    EventHandler fightTransition = new EventHandler() {
+        @Override
+        public void handle(Event event) {
+            transitionScene(5);
         }
     };
 
@@ -78,6 +121,15 @@ public class Main extends Application {
                 break;
             case 3:
                 stage.setScene(shopscene);
+                break;
+            case 4:
+                stage.setScene(brigetteFight);
+                break;
+            case 5:
+                stage.setScene(slapScene);
+                break;
+            case 6:
+                stage.setScene(menuScene);
                 break;
         }
     }

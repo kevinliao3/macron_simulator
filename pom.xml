@@ -97,6 +97,12 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.almasb</groupId>
+            <artifactId>fxgl</artifactId>
+            <version>17.1</version>
+        </dependency>
+
 
     </dependencies>
 
