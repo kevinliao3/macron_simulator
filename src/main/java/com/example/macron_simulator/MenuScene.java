@@ -7,12 +7,16 @@ import javafx.scene.text.*;
 
 public class MenuScene extends Scene {
 
+    public Text fight;
+    public Text shop;
+
+
     public MenuScene(double X, double Y) {
         super(new Group(), X, Y);
 
-        Text fight = new Text("Fight");
+        fight = new Text("Fight");
         fight.setFont(new Font(20));
-        Text shop = new Text("Shop");
+        shop = new Text("Shop");
         shop.setFont(new Font(20));
 
         TextFlow textFlow = new TextFlow(fight, shop);

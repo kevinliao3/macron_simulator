@@ -1,6 +1,7 @@
 package com.example.macron_simulator;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import javafx.animation.KeyFrame;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +44,11 @@ public class DialogueScene extends Scene {
 
         dialogueFile = new File(jsonpath);
 
+        StackPane x = new StackPane();
+
+        ((Group) this.getRoot()).getChildren().add(x);
+
+
         try {
             var dialogueJsonNode = mapper.readTree(dialogueFile);
 
@@ -49,33 +56,26 @@ public class DialogueScene extends Scene {
             ArrayList<Map<String, String>> y = (ArrayList<Map<String,String>>) result.get("dialogue");
 
             for (Map sentence: y) {
-//                System.out.println(sentence.get("id"));
-//                System.out.println(sentence.get("dialogue"));
+                String id = (String) sentence.get("id");
+                String dialogue = (String) sentence.get("dialogue");
 
-                //Change the scene for the person and render the dialogue box
+                System.out.println(id);
+                System.out.println(dialogue);
 
-                //This will be if the design is like in the design document
-//                DialogueBubble zz = new DialogueBubble((String) sentence.get("id"), (String) sentence.get("dialogue"));
-                //Create a dialogue bubble for each sentence
-                //Render it?
-                //set the css background by reading the appropriate mapping?
+                switch(id) {
+                    case "macron":
+                        x = new MacronCanvas(X,Y,dialogue);
+                        break;
+//                    case "lepen":
+//                        x = new LepenCanvas(X,Y,dialogue);
+//                        break;
+                }
+
             }
 
         } catch (IOException e) {
             throw new AssertionError("IOException found.",e);
         }
-
-        //Cannot seem to get the CSS background to work
-        Image x = new Image("file:assets/macron_phone.png");
-        BackgroundImage bImg = new BackgroundImage(x,BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-
-        Background bGround = new Background(bImg);
-
-        String cssValue = "-fx-background-image: url(macron_phone.jpg)";
-        (this.getRoot()).setStyle(cssValue);
 
     }
 

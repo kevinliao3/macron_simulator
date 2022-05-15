@@ -11,6 +11,9 @@ import java.net.URL;
 
 public class ShopScene extends Scene {
 
+    public Text back;
+    ListView<ItemPane> list;
+
     public ShopScene(double X, double Y) {
         super(new Group(), X, Y);
 
@@ -18,11 +21,19 @@ public class ShopScene extends Scene {
 
         this.getStylesheets().add("file:///" + cssFile.getAbsolutePath().replace("\\", "/"));
 
-        ListView<ItemPane> list = new ListView<ItemPane>();
+        list = new ListView<ItemPane>();
 
         list.getItems().add(new ItemPane(new Item("Earplugs")));
         list.getItems().add(new ItemPane(new Item("RAD-140")));
 //Each node can have an event handler zzzzzzz
+
+        back = new Text("Back");
+        back.setFont(new Font(30));
+
+        back.setX(300);
+        back.setY(300);
+
+        ((Group) this.getRoot()).getChildren().add(back);
         ((Group) this.getRoot()).getChildren().add(list);
 
     }
