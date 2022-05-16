@@ -70,6 +70,13 @@ public class FightScene extends Scene {
 
     }
 
+    public void handleSlap(Double percentage) {
+        decreaseOpponentHP(percentage);
+        Main.stage.setScene(this);
+
+    }
+
+
     public void decreaseOpponentHP(Double percentage) {
         b1 = b1.subtract(percentage);
     }

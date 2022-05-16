@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class Main extends Application {
 
-    Double screenX;
-    Double screenY;
+    static Double screenX;
+    static Double screenY;
 
     public static Stage stage;
     Scene currentScene;
@@ -40,7 +40,8 @@ public class Main extends Application {
     MacronBackground macronBackground;
     LepenBackground lepenBackground;
 
-    FightFactory fightFactory;
+    static FightFactory fightFactory;
+    static SceneFactory sceneFactory;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -50,121 +51,22 @@ public class Main extends Application {
         screenX = screenBounds.getMaxX();
         screenY = screenBounds.getMaxY();
 
+        fightFactory = new FightFactory();
+        sceneFactory = new SceneFactory();
+
         //Need to have a seperate thing for the correct transition between stages
 
-        introscene = new IntroScene(screenX, screenY);
-
-        shopscene = new ShopScene(screenX, screenY);
-        slapScene = new SlapScene(screenX, screenY);
-        menuScene = new MenuScene(screenX, screenY);
-
-        fightFactory = new FightFactory();
-
-        brigetteFight = fightFactory.createFight("brigette", screenX, screenY);
-
-        introscene.addEventHandler(MouseEvent.MOUSE_PRESSED,handler);
-
-        menuScene.fight.addEventHandler(MouseEvent.MOUSE_PRESSED, transitiontoFight);
-        menuScene.shop.addEventHandler(MouseEvent.MOUSE_PRESSED, menuTransition);
-
-        shopscene.back.addEventHandler(MouseEvent.MOUSE_PRESSED, dialogueTransition);
-
-        brigetteFight.addEventHandler(MouseEvent.MOUSE_PRESSED, fightTransition);
+        Scene introscene =  sceneFactory.createScene("intro");
 
 
-        currentScene = menuScene;
+        brigetteFight = fightFactory.createFight("brigette");
+
+        currentScene = introscene;
         stage.setScene(currentScene);
         stage.show();
 
     }
 
-    //Writing this function with temporary arg with flag as transition
-    //called via TransitionEvent
-
-
-    //This EventHandler will handle events that transition between Scenes
-
-    EventHandler handler = new EventHandler() {
-        @Override
-        public void handle(Event event) {
-            //Log to a logger
-            transitionScene(2);
-            introscene.stopPlaying();
-        }
-    };
-
-    EventHandler dialogueTransition = new EventHandler() {
-        @Override
-        public void handle(Event event) {
-            //Log to a logger
-            transitionScene(6);
-            introscene.stopPlaying();
-        }
-    };
-
-    EventHandler menuTransition = new EventHandler() {
-        @Override
-        public void handle(Event event) {
-            transitionScene(3);
-
-        }
-    };
-
-    EventHandler shopTransition = new EventHandler() {
-        @Override
-        public void handle(Event event) {
-            transitionScene(4);
-
-        }
-    };
-
-    EventHandler transitiontoFight = new EventHandler() {
-        @Override
-        public void handle(Event event) {
-            transitionScene(4);
-        }
-    };
-
-    EventHandler fightTransition = new EventHandler() {
-        @Override
-        public void handle(Event event) {
-            transitionScene(5);
-        }
-    };
-
-    public void transitionScene(int sceneID) {
-        switch (sceneID) {
-            case 1:
-                stage.setScene(macronBackground);
-                break;
-            case 2:
-                dialogueController("assets/dialogue1.json");
-//                stage.setScene(dialoguescene);
-                break;
-            case 3:
-                stage.setScene(shopscene);
-                break;
-            case 4:
-                stage.setScene(brigetteFight);
-                break;
-            case 5:
-                stage.setScene(slapScene);
-                double speed = slapScene.slap();
-
-                if (speed > 1000) {
-                    speed = 0.5;
-                }
-                handleSlap(speed);
-                //add event handler to slap scene
-                break;
-            case 6:
-                stage.setScene(menuScene);
-                break;
-            case 7:
-                dialogueController("assets/dialogue1.json");
-                break;
-        }
-    }
 
         void dialogueController(String jsonfile) {
         /*
@@ -242,11 +144,7 @@ public class Main extends Application {
             }
         };
 
-    public void handleSlap(Double percentage) {
-        brigetteFight.decreaseOpponentHP(percentage);
-        stage.setScene(brigetteFight);
 
-    }
 
 
     public static void main(String[] args) {

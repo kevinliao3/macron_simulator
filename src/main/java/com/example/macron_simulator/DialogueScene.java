@@ -32,7 +32,6 @@ public class DialogueScene extends Scene {
     public DialogueScene(String jsonpath, double X, double Y) {
         super(new Group(), X, Y);
 
-
         ((Group) this.getRoot()).getChildren().add(currentImage);
 
     }
