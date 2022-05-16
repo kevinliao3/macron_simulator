@@ -72,7 +72,7 @@ public class Main extends Application {
         brigetteFight.addEventHandler(MouseEvent.MOUSE_PRESSED, fightTransition);
 
 
-        currentScene = introscene;
+        currentScene = menuScene;
         stage.setScene(currentScene);
         stage.show();
 
@@ -149,6 +149,13 @@ public class Main extends Application {
                 break;
             case 5:
                 stage.setScene(slapScene);
+                double speed = slapScene.slap();
+
+                if (speed > 1000) {
+                    speed = 0.5;
+                }
+                handleSlap(speed);
+                //add event handler to slap scene
                 break;
             case 6:
                 stage.setScene(menuScene);
@@ -197,6 +204,7 @@ public class Main extends Application {
 
                 DialogueScene dialoguescene = new DialogueScene("assets/dialogue1.json",screenX, screenY);
 
+                stage.setScene(dialoguescene);
 
                     switch(id) {
                         case "macron":
@@ -233,6 +241,12 @@ public class Main extends Application {
 
             }
         };
+
+    public void handleSlap(Double percentage) {
+        brigetteFight.decreaseOpponentHP(percentage);
+        stage.setScene(brigetteFight);
+
+    }
 
 
     public static void main(String[] args) {

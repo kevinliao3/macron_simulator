@@ -39,9 +39,10 @@ public class SlapScene extends Scene {
 
     public BoundingBox y;
     TranslateTransition asdf;
-    Rectangle circle;
+    ImageView circle;
 
     Pane canvas;
+
     //Need an animation timer with slap
     public SlapScene(double X, double Y) {
 
@@ -56,20 +57,17 @@ public class SlapScene extends Scene {
         maxSpeed = 5e-19;
 
 //        canvas = new Pane();
-        circle = new Rectangle(90,90,Color.RED);
-        //Need to have a function that checks for collisions
-//        canvas.getChildren().addAll(circle);
-//        circle.setX(0);
-//        circle.setY(0);
+        Image brigette = new Image("file:assets/brigette_head.PNG");
+        circle = new ImageView(brigette);        //Need to have a function that checks for collisions
+
         circle.setX(X/2);
         circle.setY(Y/2);
 
         y = new BoundingBox(X/2,Y/2,90,90);
 
-
         this.addEventHandler(MouseEvent.MOUSE_MOVED, new handler());
 
-        at = new AnimationTimer() {
+       at = new AnimationTimer() {
             @Override
             public void handle(long l) {
 //                System.out.println(circle.getX());
@@ -93,22 +91,13 @@ public class SlapScene extends Scene {
 
                 boolean intersects = handView.intersects(y);
 
-//                System.out.println(intersects);
-
-//                System.out.println("CIRCLE TRANSLATE X IS" + circle.getTranslateX());
-//                System.out.println(circle.getTranslat)
             }
         };
 
         ((Group) this.getRoot()).getChildren().add(handView);
-
-//        ((Group) this.getRoot()).getChildren().add(canvas);
         ((Group) this.getRoot()).getChildren().add(circle);
 
-//        Bounds x = new Bounds(X,Y,0,1,1,1);
 
-
-        at.start();
 
         asdf = new TranslateTransition(Duration.millis(1000),circle);
         asdf.setFromX(0);
@@ -116,17 +105,24 @@ public class SlapScene extends Scene {
         asdf.setByX(100);
         asdf.setByY(100);
         asdf.setRate(1);
-//        asdf.setToX((X/2));
-//        asdf.setToY((Y/2));
 
         asdf.setDelay(Duration.millis(5000));
-        asdf.setCycleCount(5);
+        asdf.setCycleCount(1000);
         asdf.setAutoReverse(true);
-        asdf.play();
-//        asdf.pause();
-//        asdf.stop();
 
     }
+
+    public double slap() {
+        at.start();
+
+        asdf.play();
+
+        while (!slapped) {
+            ;
+        }
+
+        return speed;
+    };
 
     public class handler implements EventHandler<MouseEvent> {
         @Override
@@ -141,18 +137,19 @@ public class SlapScene extends Scene {
             handView.setX(event.getX());
             handView.setY(event.getY());
 
-            Double rectX = circle.getX();
-            Double rectY = circle.getY();
 
-            System.out.println(rectX);
-            System.out.println(rectY);
+            Double rectX = circle.getTranslateX();
+            Double rectY = circle.getTranslateY();
 
-//            boolean intersects = handView.intersects(y);
-            boolean intersects = handView.intersects(rectX, rectY, 90,90);
+            y = new BoundingBox(circle.getX()+rectX,circle.getY(),90,90);
+
+            boolean intersects = handView.intersects(y);
+//            boolean intersects = handView.intersects(rectX, rectY, 90,90);
             if (intersects && !slapped) {
                 String temp = "You slapped at:" + speed;
                 System.out.println(temp);
                 slapped = true;
+
             }
         }
     }

@@ -1,5 +1,8 @@
 package com.example.macron_simulator;
 
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -25,6 +28,9 @@ public class FightScene extends Scene {
     Rectangle opponentHPBar;
     Rectangle opponentPPBar;
 
+    DoubleProperty healthPercentage1;
+    DoubleBinding b1;
+
     public Text slap;
 
     public FightScene(ImageView opponentView, double X, double Y) {
@@ -34,12 +40,11 @@ public class FightScene extends Scene {
         macronPPBar = new Rectangle(150.0, 30.0);
 
         opponentHPBar = new Rectangle(150.0, 30.0);
+        healthPercentage1 = new SimpleDoubleProperty(1.0);
+        b1 = opponentHPBar.widthProperty().multiply(healthPercentage1);
 
         slap = new Text("Slap");
         slap.setFont(new Font(100));
-
-//        slap.setX(300);
-//        slap.setY(300);
 
         slap.setTextAlignment(TextAlignment.RIGHT);
         Image macron = new Image("file:assets/macron_wink_snipped.png");
@@ -65,6 +70,8 @@ public class FightScene extends Scene {
 
     }
 
-
+    public void decreaseOpponentHP(Double percentage) {
+        b1 = b1.subtract(percentage);
+    }
 
 }
