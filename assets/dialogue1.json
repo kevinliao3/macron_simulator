@@ -1,15 +1,43 @@
 {
-  "dialogue": [{
-    "id": "macron",
-    "dialogue": "hello"
-  },
+  "dialogue": [
     {
-      "id": "lepen",
-      "dialogue": "hello"
+    "id" : "lepen",
+    "dialogue":" What happened to you ? Your cheek is all swollen."
     },
     {
-      "id": ""
-    }
-
-  ]
-}
+    "id":"macron",
+    "dialogue":"...I got slapped by a kid…"
+    },
+    {
+    "id":"lepen",
+    "dialogue":"And ?"
+    },
+    {
+    "id":"macron",
+    "dialogue":" … It was filmed…"
+    },
+    {
+    "id":"lepen",
+    "dialogue":"YOU WERE FILMED, GETTING SLAPPED BY A KID ???"
+    },
+    {
+    "id":"lepen",
+    "dialogue":"Get out. I no longer want to see you. I don’t want to be with such a loser."
+    },
+    {
+    "id":"macron",
+    "dialogue":"But, dear"
+    },
+    {
+    "id":"lepen",
+    "dialogue":"GET OUT !"
+    },
+    {
+    "id":"macron",
+    "dialogue":"How can I make amend of myself ?"
+    },
+    {
+    "id":"lepen",
+    "dialogue":"Maybe if you can achieve something… Like giving me France. But i doubt you can do that"
+    }]
+  }

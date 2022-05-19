@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import javafx.util.Duration;
@@ -26,6 +25,7 @@ public class SlapScene extends Scene {
     ImageView handView;
 
     AnimationTimer at;
+    long pastTime;
 
     Double pastX;
     Double pastY;
@@ -33,89 +33,77 @@ public class SlapScene extends Scene {
     Double speed;
     Double maxSpeed;
 
-    long pastTime;
 
     boolean slapped;
 
-    public BoundingBox y;
-    TranslateTransition asdf;
-    ImageView circle;
+    public BoundingBox personBoundingBox;
 
-    Pane canvas;
+    TranslateTransition personTransition;
+    ImageView personSlapped;
 
+    FightScene parentScene;
+    
     //Need an animation timer with slap
-    public SlapScene(double X, double Y) {
+    public SlapScene(double X, double Y, ImageView person, FightScene parent) {
 
         super(new Group(), X, Y);
 
         hand = new Image("file:assets/hand.png");
         handView = new ImageView(hand);
+        
         //there may be some wierd stuff going on with longs and doubles
         pastTime = 0;
         pastX = 0.0;
 
         maxSpeed = 5e-19;
 
-//        canvas = new Pane();
-        Image brigette = new Image("file:assets/brigette_head.PNG");
-        circle = new ImageView(brigette);        //Need to have a function that checks for collisions
+        personSlapped = person;        //Need to have a function that checks for collisions
 
-        circle.setX(X/2);
-        circle.setY(Y/2);
+        personSlapped.setX(50);
+        personSlapped.setY(Y/2);
 
-        y = new BoundingBox(X/2,Y/2,90,90);
+        //this should not be necessayr since it should be updated in the handler 
+//        personBoundingBox = new BoundingBox(X/2,Y/2,90,90);
+        parentScene = parent;
 
         this.addEventHandler(MouseEvent.MOUSE_MOVED, new handler());
 
        at = new AnimationTimer() {
             @Override
             public void handle(long l) {
-//                System.out.println(circle.getX());
-//                System.out.println(circle.getY());
 
-                //Get current X location and subtract from previous absolute value
-                Double curX = handView.getX();
-                Double diffX = Math.abs(curX-pastX);
+                speed = getSpeed(l);
 
-                speed = diffX/((l-pastTime)*10e-9);
-
-                pastTime = l;
-
-                if (speed > maxSpeed) {
-                    maxSpeed = speed;
-                }
-
-//                System.out.println("Current record speed " + maxSpeed);
-
-                //Check for intersection
-
-                boolean intersects = handView.intersects(y);
+//                System.out.println("Current speed " + speed);
 
             }
         };
 
+        personTransition = new TranslateTransition(Duration.millis(10000),personSlapped);
+        personTransition.setFromX(0);
+        personTransition.setFromY(-400);
+        personTransition.setByX(300);
+        personTransition.setByY(600);
+        personTransition.setRate(50);
+
+        personTransition.setCycleCount(100000000);
+        personTransition.setAutoReverse(true);
+
         ((Group) this.getRoot()).getChildren().add(handView);
-        ((Group) this.getRoot()).getChildren().add(circle);
+        ((Group) this.getRoot()).getChildren().add(personSlapped);
 
+        at.start();
+        //Need to also start translation
 
-
-        asdf = new TranslateTransition(Duration.millis(1000),circle);
-        asdf.setFromX(0);
-        asdf.setFromY(0);
-        asdf.setByX(100);
-        asdf.setByY(100);
-        asdf.setRate(1);
-
-        asdf.setDelay(Duration.millis(5000));
-        asdf.setCycleCount(1000);
-        asdf.setAutoReverse(true);
+        personTransition.play();
 
     }
 
+    //this is probably the problem
     public double slap() {
         at.start();
 
-        asdf.play();
+        personTransition.play();
 
         while (!slapped) {
             ;
@@ -124,31 +112,63 @@ public class SlapScene extends Scene {
         return speed;
     };
 
+    public double getSpeed(long l) {
+        Double curX = handView.getX();
+        Double diffX = Math.abs(curX-pastX);
+
+        //The 10e-9 just is to reduce the value, is not anything that significant
+        speed = diffX/((l-pastTime)*10e-9);
+
+        pastTime = l;
+
+        return speed;
+    };
+
+    public double getPercentageDecreaseFromSpeed(Double speed) {
+        if (speed > 0 && speed < 500) {
+            return 0.05;
+        } else if ( speed >= 500 && speed < 1000) {
+            return 0.1;
+        } else if (speed >= 1000) {
+            return 0.15;
+        } else {
+            return 0;
+        }
+    }
+
     public class handler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent event) {
             //Log to a logger
             pastX = handView.getX();
-//            pastY = handView.getY();
-
-//            System.out.println(event.getX() - pastX);
-//            System.out.println(event.getY() - pastY);
 
             handView.setX(event.getX());
             handView.setY(event.getY());
 
+            Double rectX = personSlapped.getTranslateX();
+            Double rectY = personSlapped.getTranslateY();
 
-            Double rectX = circle.getTranslateX();
-            Double rectY = circle.getTranslateY();
+            System.out.println(personSlapped.getFitHeight());
+            System.out.println(personSlapped.getFitWidth());
 
-            y = new BoundingBox(circle.getX()+rectX,circle.getY(),90,90);
+            Double startX = personSlapped.getX()+rectX;
+            Double startY = personSlapped.getY()+rectY;
 
-            boolean intersects = handView.intersects(y);
-//            boolean intersects = handView.intersects(rectX, rectY, 90,90);
+            System.out.println(startX);
+            System.out.println(startY);
+
+            personBoundingBox = new BoundingBox(startX,startY,100, 100);
+
+            boolean intersects = handView.intersects(personBoundingBox);
             if (intersects && !slapped) {
-                String temp = "You slapped at:" + speed;
-                System.out.println(temp);
+                String temp = "You slapped at:" + speed + " km/hr";
+//                System.out.println(temp);
                 slapped = true;
+                at.stop();
+
+                parentScene.handleSlap(getPercentageDecreaseFromSpeed(speed),speed);
+
+                Main.stage.setScene(parentScene);
 
             }
         }

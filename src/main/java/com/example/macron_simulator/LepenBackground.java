@@ -7,10 +7,11 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class LepenBackground extends Scene {
+public class LepenBackground extends DialogueScene {
+
 
     public LepenBackground(double X, double Y, String dialogue) {
-        super(new Group(), X, Y);
+        super();
 
         Image x = new Image("file:assets/lepen.PNG",X,Y, true,true);
         BackgroundImage bImg = new BackgroundImage(x, BackgroundRepeat.NO_REPEAT,

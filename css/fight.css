@@ -7,6 +7,14 @@
     -fx-translate-z: 5;
 }
 
+.opponenthpbar {
+    -fx-fill: red;
+    -fx-rotate: -90;
+    -fx-translate-x: 100;
+    -fx-translate-y: 100;
+    -fx-translate-z: 5;
+}
+
 .ppbar {
     -fx-fill: blue;
     -fx-rotate: -90;

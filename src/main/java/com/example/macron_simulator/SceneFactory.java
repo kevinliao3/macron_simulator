@@ -13,7 +13,7 @@ public class SceneFactory {
             switch (id) {
                 case "intro":
                     IntroScene introScene = new IntroScene(Main.screenX, Main.screenY);
-                    introScene.addEventHandler(MouseEvent.MOUSE_PRESSED,transitionToMenu);
+                    introScene.addEventHandler(MouseEvent.MOUSE_PRESSED,transitionToDialogue);
                     return introScene;
                 case "shop":
                     ShopScene shopScene = new ShopScene(Main.screenX, Main.screenY);
@@ -24,28 +24,21 @@ public class SceneFactory {
                     menuScene.fight.addEventHandler(MouseEvent.MOUSE_PRESSED, transitionToFight);
                     menuScene.shop.addEventHandler(MouseEvent.MOUSE_PRESSED, transitionToShop);
                     return menuScene;
-                case "slap":
-                    SlapScene slapScene = new SlapScene(Main.screenX, Main.screenY);
-                    return slapScene;
+                case "dialogue":
+                    DialogueChain dialogueChain = new DialogueChain("assets/dialogue1.json");
+                    return dialogueChain.sceneList.getFirst();
+
 
             }
             ;
             return null;
         }
 
-//    EventHandler transitionToDialogue = new EventHandler() {
-//        @Override
-//        public void handle(Event event) {
-//            //Log to a logger
-//            Main.dialogueController("assets/dialogue1.json");
-//
-//            Main.currentScene.stopPlaying();
-//        }
-//    };
 
     EventHandler transitionToShop = new EventHandler() {
         @Override
         public void handle(Event event) {
+
             Main.stage.setScene(createScene("shop"));
 
         }
@@ -61,7 +54,21 @@ public class SceneFactory {
     EventHandler transitionToMenu = new EventHandler() {
         @Override
         public void handle(Event event) {;
+
+
             Main.stage.setScene(createScene("menu"));
+        }
+    };
+
+    EventHandler transitionToDialogue = new EventHandler() {
+        @Override
+        public void handle(Event event) {;
+            //Get the slapscene and call the stop funcitn, this is a temporary location for this location while dialogue does not wokr
+
+            IntroScene introScene = (IntroScene) event.getSource();
+            introScene.stopPlaying();
+
+            Main.stage.setScene(createScene("dialogue"));
         }
     };
 

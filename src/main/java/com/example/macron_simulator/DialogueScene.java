@@ -23,16 +23,11 @@ import java.util.Map;
 //I think that instead of a DialogueScene I will use a DialogueController class that switches between different scenes
 public class DialogueScene extends Scene {
 
-    ObjectMapper mapper;
-    File dialogueFile;
-    File personToImageFile;
+    public Scene nextScene;
 
-    ImageView currentImage;
     //Have it accept JSON dialogue options
-    public DialogueScene(String jsonpath, double X, double Y) {
-        super(new Group(), X, Y);
-
-        ((Group) this.getRoot()).getChildren().add(currentImage);
+    public DialogueScene() {
+        super(new Group(), Main.screenX, Main.screenY);
 
     }
 

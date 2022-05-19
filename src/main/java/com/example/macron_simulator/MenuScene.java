@@ -19,8 +19,14 @@ public class MenuScene extends Scene {
         shop = new Text("Shop");
         shop.setFont(new Font(20));
 
-        TextFlow textFlow = new TextFlow(fight, shop);
-        ((Group) this.getRoot()).getChildren().add(textFlow);
+        fight.setX(100);
+        fight.setY(100);
+
+        shop.setX(100);
+        shop.setY(150);
+
+        ((Group) this.getRoot()).getChildren().add(fight);
+        ((Group) this.getRoot()).getChildren().add(shop);
 
     }
 
