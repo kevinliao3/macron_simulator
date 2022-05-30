@@ -16,6 +16,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import java.util.Locale;
+import javax.speech.Central;
+import javax.speech.synthesis.Synthesizer;
+import javax.speech.synthesis.SynthesizerModeDesc;
+
+
 public class Main extends Application {
 
     static Double screenX;
@@ -29,6 +35,7 @@ public class Main extends Application {
     IntroScene introscene;
 
     FightScene brigetteFight;
+    static FightScene curScene;
     SlapScene slapScene;
     MenuScene menuScene;
 
@@ -38,23 +45,38 @@ public class Main extends Application {
     static FightSceneFactory fightFactory;
     static SceneFactory sceneFactory;
 
+    static ItemBag itemBag;
+    static String heldItem;
+
+    public static Integer progressFlag;
+
+    public static TextToSpeech textToSpeech;
+
+    public static Macron macron;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        macron = new Macron();
+
+        textToSpeech = new TextToSpeech();
+
         stage = primaryStage;
 
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         screenX = screenBounds.getMaxX();
         screenY = screenBounds.getMaxY();
 
-        fightFactory = new FightSceneFactory();
         sceneFactory = new SceneFactory();
+        fightFactory = new FightSceneFactory();
+
+        progressFlag = 0;
 
         //Need to have a seperate thing for the correct transition between stages
 
         Scene introscene =  sceneFactory.createScene("intro");
 
-
-        brigetteFight = fightFactory.createFight("brigette");
+        itemBag = new ItemBag();
 
         currentScene = introscene;
         stage.setScene(currentScene);
@@ -62,6 +84,31 @@ public class Main extends Application {
 
     }
 
+    public static String fightGen() {
+
+    switch(progressFlag) {
+        case 0:
+            return "poutou";
+            //Poutou
+        case 1:
+            return "zemmour";
+            //Zemmour
+        case 2:
+            return "brigette";
+            //briggete
+        case 3:
+            return "kid";
+        default:
+            System.out.println(progressFlag);
+            //will kid
+
+    }
+    return null;
+    };
+
+    public static void winFight() {
+        progressFlag += 1;
+    }
 
     public static void main(String[] args) {
         launch();

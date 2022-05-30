@@ -12,6 +12,7 @@ module com.example.macron_simulator {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.almasb.fxgl.all;
+    requires freetts;
 
     opens com.example.macron_simulator to javafx.fxml;
     exports com.example.macron_simulator;

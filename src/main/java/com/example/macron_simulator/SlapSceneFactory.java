@@ -8,11 +8,10 @@ public class SlapSceneFactory {
     public SlapScene createSlapScene(String id, FightScene parent) {
         switch (id) {
            case "brigette":
-               Image brigette = new Image("file:assets/brigette_head.PNG");
-               ImageView brigetteView = new ImageView(brigette);        //Need to have a function that checks for collisions
-               brigetteView.setFitWidth(100);
-               brigetteView.setFitHeight(100);
-               SlapScene slapScene = new SlapScene(Main.screenX, Main.screenY, brigetteView, parent);
+               ImageView opponentView = parent.opponent;
+               opponentView.setFitWidth(100);
+               opponentView.setFitHeight(100);
+               SlapScene slapScene = new SlapScene(Main.screenX, Main.screenY, opponentView, parent);
             return slapScene;
         }
 

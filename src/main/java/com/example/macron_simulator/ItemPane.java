@@ -17,11 +17,15 @@ public class ItemPane extends Pane {
         itemName = new Text(x.name);
         itemName.setFont(new Font(20));
 
-        y = new Rectangle(10,10, Color.RED);
+        itemName.setY(20);
 
-        this.getChildren().addAll(y, itemName);
+        this.getChildren().addAll(itemName);
 
 
+    }
+
+    public String getitemName() {
+        return (itemName.getText());
     }
 
 }

@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -25,9 +28,19 @@ public class DialogueScene extends Scene {
 
     public Scene nextScene;
 
+    Text dialogue;
+
     //Have it accept JSON dialogue options
-    public DialogueScene() {
+    public DialogueScene(String passedDialogue) {
         super(new Group(), Main.screenX, Main.screenY);
+
+        this.dialogue = new Text(passedDialogue);
+        dialogue.setFont(new Font(30));
+        dialogue.setWrappingWidth(300);
+        dialogue.setFill(Color.RED);
+//        dialogue.setX(700);
+//        dialogue.setY(300);
+//        ((Group) this.getRoot()).getChildren().add(dialogue);
 
     }
 

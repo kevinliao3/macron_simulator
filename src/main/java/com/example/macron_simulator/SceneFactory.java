@@ -47,8 +47,12 @@ public class SceneFactory {
     EventHandler transitionToFight = new EventHandler() {
         @Override
         public void handle(Event event) {
-            Main.stage.setScene(Main.fightFactory.createFight("brigette"));
+
+            FightScene y = Main.fightFactory.createFight(Main.fightGen());
+            Main.curScene = y;
+            Main.stage.setScene(y);
         }
+
     };
 
     EventHandler transitionToMenu = new EventHandler() {

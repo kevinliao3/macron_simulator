@@ -19,7 +19,7 @@ public class IntroScene extends Scene {
     public IntroScene(double X, double Y) {
 
         super(new Group(), X, Y);
-        media = new Media((new File("assets/videoplayback.mp4").toURI().toString()));
+        media = new Media((new File("assets/intro.mp4").toURI().toString()));
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         mediaView = new MediaView(mediaPlayer);

@@ -16,46 +16,41 @@ public class FightSceneFactory {
             case "brigette":
                 Image brigette = new Image("file:assets/brigette.jpg");
                 ImageView brigetteView = new ImageView(brigette);
-                FightScene brigetteFight = new FightScene(brigetteView, Main.screenX, Main.screenY);
-                brigetteFight.slap.addEventHandler(MouseEvent.MOUSE_PRESSED,transitionToSlap);
+                BrigetteFight brigetteFight = new BrigetteFight(brigetteView);
 
                 return brigetteFight;
 
             case "zemmour":
-                Image zemmour = new Image("file:assets/zemmour.jpg");
+                Image zemmour = new Image("file:assets/zemmour.PNG");
                 ImageView zemmourView = new ImageView(zemmour);
+                ZemmourFight zemmourFight = new ZemmourFight(zemmourView);
 
-                return new FightScene(zemmourView, Main.screenX, Main.screenY);
+                return zemmourFight;
 
+            case "poutou":
+                Image poutou = new Image("file:assets/poutou.jpg");
+                ImageView poutouView = new ImageView(poutou);
+               PoutouFight poutouFight = new PoutouFight(poutouView);
+
+                return poutouFight;
+            case "kid":
+                Image kid = new Image("file:assets/will.png");
+                ImageView kidView = new ImageView(kid);
+                KidFight kidFight = new KidFight(kidView);
+                return kidFight;
         }
         ;
         return null;
     }
-    EventHandler transitionToFight = new EventHandler() {
-        @Override
-        public void handle(Event event) {
-            Main.stage.setScene(Main.sceneFactory.createScene("fight"));
-        }
-    };
 
         EventHandler transitionToSlap = new EventHandler() {
         @Override
         public void handle(Event event) {
-//            SlapScene test = (SlapScene) Main.sceneFactory.createScene("slap");
             Text x = (Text) event.getSource();
             FightScene y = (FightScene) x.getScene();
             SlapScene test = y.slapSceneFactory.createSlapScene("brigette", y);
             Main.stage.setScene(test);
 
-//            double speed = test.slap();
-//
-//            if (speed > 1000) {
-//                speed = 0.5;
-//            }
-//
-//            FightScene x = (FightScene) event.getSource();
-//            x.handleSlap(speed);
-            //add event handler to slap scene
         }
     };
 

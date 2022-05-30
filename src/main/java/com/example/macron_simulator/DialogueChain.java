@@ -37,16 +37,6 @@ public class DialogueChain {
 
         ObjectMapper mapper = new ObjectMapper();
 
-//        File personToImageFile = new File("assets/persontoimage.json");
-
-//        try {
-//            var xx = mapper.readTree(personToImageFile);
-//            Map<String, String> personToImage = mapper.convertValue(xx, new TypeReference<Map<String, String>>() {
-//            });
-//        } catch (IOException e) {
-//            throw new AssertionError("IOException found.", e);
-//        }
-
         File dialogueFile = new File(jsonfile);
 
         try {
@@ -60,6 +50,8 @@ public class DialogueChain {
                 String id = new String((String)sentence.get("id"));
                 String dialogue = new String((String)sentence.get("dialogue"));
 
+                System.out.println(id);
+                System.out.println(dialogue);
 
                 switch(id) {
                     case "macron":
@@ -69,6 +61,22 @@ public class DialogueChain {
                     case "lepen":
                         LepenBackground lepenBackground = new LepenBackground(Main.screenX, Main.screenY, dialogue);
                         sceneList.add(lepenBackground);
+                        break;
+                    case "poutou":
+                        PoutouBackground poutouBackground = new PoutouBackground(Main.screenX, Main.screenY, dialogue);
+                        sceneList.add(poutouBackground);
+                        break;
+                    case "zemmour":
+                        ZemmourBackground zemmourBackground = new ZemmourBackground(Main.screenX, Main.screenY, dialogue);
+                        sceneList.add(zemmourBackground);
+                        break;
+                    case "bald":
+                        BaldMacronBackground baldMacronBackground = new BaldMacronBackground(Main.screenX, Main.screenY, dialogue);
+                        sceneList.add(baldMacronBackground);
+                        break;
+                    case "kid":
+                        KidBackground kidBackground = new KidBackground(Main.screenX, Main.screenY,dialogue);
+                        sceneList.add(kidBackground);
                         break;
 
                 }
@@ -105,6 +113,8 @@ public class DialogueChain {
     EventHandler transitionToMenu = new EventHandler() {
         @Override
         public void handle(Event event) {
+            DialogueScene x = (DialogueScene) event.getSource();
+            Main.textToSpeech.speak(x.dialogue.getText());
             Main.stage.setScene(Main.sceneFactory.createScene("menu"));
         }
     };
@@ -113,6 +123,7 @@ public class DialogueChain {
         @Override
         public void handle(Event event) {
             DialogueScene x = (DialogueScene) event.getSource();
+            Main.textToSpeech.speak(x.dialogue.getText());
             Main.stage.setScene(x.nextScene);
         }
     };

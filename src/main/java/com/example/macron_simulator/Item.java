@@ -8,5 +8,8 @@ public class Item {
         this.name = name;
     }
 
+    public void effect() {
+        System.out.println("nothing");
+    };
 
 }

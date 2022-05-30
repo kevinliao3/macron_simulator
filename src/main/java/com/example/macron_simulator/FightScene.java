@@ -1,14 +1,9 @@
 package com.example.macron_simulator;
 
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -23,21 +18,14 @@ public class FightScene extends Scene {
 
     ImageView opponent;
 
-    Rectangle macronHPBar;
-    Rectangle macronPPBar;
-
-    Rectangle opponentHPBar;
-    Rectangle opponentPPBar;
-    
-    Double healthPercentage;
-    Text healthPercentageText;
+    Double opponentHP;
+    Text opponentHPText;
     Double macronHealthPercentage;
     Text macronHealthPercentageText;
+
+    Double opponentStartDamage;
+    Double opponentEndDamage;
     
-    DoubleProperty healthPercentage1;
-
-    DoubleBinding b1;
-
     public Text slap;
 
     SlapSceneFactory slapSceneFactory;
@@ -50,26 +38,21 @@ public class FightScene extends Scene {
 
         slapSceneFactory = new SlapSceneFactory();
 
-        macronHPBar = new Rectangle(150.0, 30.0);
-        macronPPBar = new Rectangle(150.0, 30.0);
+        this.opponent = opponentView;
 
-        opponentHPBar = new Rectangle(150.0, 30.0);
-        opponentHPBar.getStyleClass().add("opponenthpbar");
+        opponentHP = 200.0;
+        opponentHPText = new Text(opponentHP.toString());
+        opponentHPText.setX(100);
+        opponentHPText.setY(300);
 
-        healthPercentage1 = new SimpleDoubleProperty(1.0);
-        b1 = opponentHPBar.heightProperty().multiply(healthPercentage1);
-        
-        healthPercentage = 1.0;
-        healthPercentageText = new Text(healthPercentage.toString());
-        healthPercentageText.setX(100);
-        healthPercentageText.setY(300);
-
-        macronHealthPercentage = 1.0;
+        macronHealthPercentage = Main.macron.getHP();
         macronHealthPercentageText = new Text(macronHealthPercentage.toString());
         macronHealthPercentageText.setX(100);
         macronHealthPercentageText.setY(700);
 
-        ((Group) this.getRoot()).getChildren().add(healthPercentageText);
+        opponentStartDamage = 20.0;
+        opponentEndDamage = 30.0;
+        ((Group) this.getRoot()).getChildren().add(opponentHPText);
 
         slap = new Text("Slap");
         slap.setFont(new Font(100));
@@ -83,20 +66,14 @@ public class FightScene extends Scene {
         File cssFile = new File("css/fight.css");
         this.getStylesheets().add("file:///" + cssFile.getAbsolutePath().replace("\\", "/"));
 
-        macronHPBar.getStyleClass().add("hpbar");
-        macronPPBar.getStyleClass().add("ppbar");
-
         macronView.getStyleClass().add("macron");
-        opponentView.getStyleClass().add("opponent");
+        opponent.getStyleClass().add("opponent");
 
         slap.setX(800);
         slap.setY(500);
 
-        ((Group) this.getRoot()).getChildren().add(macronHPBar);
-        ((Group) this.getRoot()).getChildren().add(macronPPBar);
         ((Group) this.getRoot()).getChildren().add(macronView);
-        ((Group) this.getRoot()).getChildren().add(opponentView);
-        ((Group) this.getRoot()).getChildren().add(opponentHPBar);
+        ((Group) this.getRoot()).getChildren().add(opponent);
         ((Group) this.getRoot()).getChildren().add(slap);
         ((Group) this.getRoot()).getChildren().add(macronHealthPercentageText);
 
@@ -106,25 +83,21 @@ public class FightScene extends Scene {
         decreaseOpponentHP(percentage,speed);
 
         modifyMacronHealthText();
-        //Here i will check for the opponent HP conditon after i get slapped the shit out of
-
-
-//        Main.stage.setScene(this);
 
     }
 
     public Text getNewHPText() {
-        healthPercentageText = new Text(healthPercentage.toString());
-        healthPercentageText.setX(100);
-        healthPercentageText.setY(300);
-        return healthPercentageText;
+        opponentHPText = new Text(opponentHP.toString());
+        opponentHPText.setX(100);
+        opponentHPText.setY(300);
+        return opponentHPText;
     }
 
 
     public void decreaseOpponentHP(Double percentage, Double speed) {
 
-        healthPercentage = healthPercentage - percentage;
-        ((Group) this.getRoot()).getChildren().remove(healthPercentageText);
+        opponentHP = opponentHP - percentage;
+        ((Group) this.getRoot()).getChildren().remove(opponentHPText);
         ((Group) this.getRoot()).getChildren().add(getNewHPText());
 
         if (!(speedSlap == null)) {
@@ -142,14 +115,14 @@ public class FightScene extends Scene {
     public void decreaseMacronHealth() {
 
         Random random = new Random();
-        Double start = 0.10;
-        Double end = 0.15;
 
         Double randomRoll = random.nextDouble();
-        Double result = start + (randomRoll * (end-start));
+        Double result = opponentStartDamage + (randomRoll * (opponentEndDamage-opponentStartDamage));
 
+        System.out.println("Opponent did " + result +  "damage" + macronHealthPercentage);
         macronHealthPercentage = macronHealthPercentage - result;
 
+        System.out.println(macronHealthPercentage);
     };
 
     public void modifyMacronHealthText() {
@@ -167,6 +140,10 @@ public class FightScene extends Scene {
 
         ((Group) this.getRoot()).getChildren().add(macronHealthPercentageText);
 
+    }
+
+    public void increaseHealth(Double amount) {
+        macronHealthPercentage = macronHealthPercentage + amount;
     }
 
 }

@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 public class LepenBackground extends DialogueScene {
 
 
-    public LepenBackground(double X, double Y, String dialogue) {
-        super();
+    public LepenBackground(double X, double Y, String passedDialogue) {
+        super(passedDialogue);
 
         Image x = new Image("file:assets/lepen.PNG",X,Y, true,true);
         BackgroundImage bImg = new BackgroundImage(x, BackgroundRepeat.NO_REPEAT,
@@ -25,11 +25,7 @@ public class LepenBackground extends DialogueScene {
         canvas.setPrefSize(X,Y);
 
         canvas.setBackground(bGround);
-
-        Text asdf = new Text(dialogue);
-        asdf.setFont(new Font(50));
-        canvas.getChildren().add(asdf);
-
+        canvas.getChildren().add(dialogue);
         ((Group) this.getRoot()).getChildren().add(canvas);
     }
 

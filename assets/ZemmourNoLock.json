@@ -1,0 +1,21 @@
+{
+  "dialogue":[
+    {
+      "id":"macron",
+      "dialogue":"I have come to take what is mine."
+    },
+    {
+      "id":"zemmour",
+      "dialogue":"Actually, I had just lended her to you for a period.She has always been into me. "
+    },
+    {
+      "id": "zemmour",
+      "dialogue": "Before i beat you up, I will be equally distributing our battle items so I will be taking your items"
+    },
+    {
+      "id": "macron",
+      "dialogue": "poutoux"
+    }
+
+  ]
+}

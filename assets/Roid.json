@@ -1,0 +1,13 @@
+{
+  "dialogue":[
+    {
+      "id":"bald",
+      "dialogue":"I'm here to get my revenge."
+    },
+    {
+      "id":"kid",
+      "dialogue":"Damn Jada you are looking fine."
+    }
+
+  ]
+}

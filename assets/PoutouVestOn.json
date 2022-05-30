@@ -1,0 +1,13 @@
+{
+  "dialogue": [
+    {
+      "id" : "poutou",
+      "dialogue":"Hello comrade"
+    },
+    {
+      "id": "macron",
+      "dialogue": "Actually, it is the le president poutou. I am here to beat you up."
+    }
+
+  ]
+}
